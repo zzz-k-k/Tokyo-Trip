@@ -1,0 +1,370 @@
+{
+  "$comment": "Task 1.4 数据源：三段酒店时刻 + 三套行李方案 + Day 7 机场参考路线 + Day 3–7 当晚回程占位。供 Day 1/2/7 文档头『行李』字段、Day 3–7 文档尾『当晚回程』字段、Day 7 机场段渲染时引用。",
+  "schema_version": "1.0",
+  "spec_id": "japan-7day-itinerary",
+  "validates_requirements": [
+    "§11.1",
+    "§11.2",
+    "§11.3",
+    "§11.4",
+    "§11.5",
+    "§11.6"
+  ],
+  "lodging_segments": [
+    {
+      "id": "kawasaki",
+      "name_cn": "Hotel Plus Hostel TOKYO 川崎",
+      "name_jp": "Hotel Plus Hostel TOKYO KAWASAKI",
+      "role": "夜 0（行程开始前一晚）住宿，仅作为 Day 1 早晨的退房点出现",
+      "location": {
+        "city": "川崎",
+        "nearest_station": "JR 川崎站",
+        "walk_minutes_from_station": null,
+        "address_note": "用户实际预订地址以预订单为准（待用户实地确认）"
+      },
+      "checkout_time": "11:00",
+      "checkout_date": "2026-06-03",
+      "checkin_time": null,
+      "checkin_date": null,
+      "appears_in_documents": ["day-1-2026-06-03.md (头部『今晨出发』)"],
+      "create_place_profile": false,
+      "_validates": "§11.1"
+    },
+    {
+      "id": "futareno",
+      "name_cn": "GuestHouse FUTARENO（横滨）",
+      "name_jp": "GuestHouse FUTARENO",
+      "role": "夜 1 住宿（横滨）",
+      "location": {
+        "city": "横滨",
+        "nearest_station": "横滨市营地铁 / 港未来线（具体最近站待用户实地确认）",
+        "walk_minutes_from_station": null,
+        "address_note": "用户实际预订地址以预订单为准（待用户实地确认）"
+      },
+      "checkout_time": "11:00",
+      "checkout_date": "2026-06-04",
+      "checkin_time": "16:00",
+      "checkin_date": "2026-06-03",
+      "appears_in_documents": [
+        "day-1-2026-06-03.md (头部『当晚住宿』+ 末尾步行抵达)",
+        "day-2-2026-06-04.md (头部『今晨出发』)"
+      ],
+      "create_place_profile": false,
+      "_validates": "§11.1, §11.2"
+    },
+    {
+      "id": "cogo_ryogoku",
+      "name_cn": "COGO RYOGOKU（两国）",
+      "name_jp": "COGO RYOGOKU",
+      "role": "夜 2–6 常驻住宿（两国）；Day 3–7 头尾持续提及；不创建独立 Place_Profile",
+      "location": {
+        "city": "东京 墨田区 两国",
+        "nearest_station": "JR 总武线 两国站 / 都营大江户线 两国站",
+        "walk_minutes_from_station": "约 5–8 分钟（待用户实地确认具体出口）",
+        "address_note": "用户实际预订地址以预订单为准（待用户实地确认）"
+      },
+      "checkout_time": "10:00",
+      "checkout_date": "2026-06-09",
+      "checkin_time": "16:00",
+      "checkin_date": "2026-06-04",
+      "appears_in_documents": [
+        "day-2-2026-06-04.md (头部『当晚住宿』+ 末尾抵达)",
+        "day-3-2026-06-05.md (头部『当晨出发』『当晚住宿』+ 末尾回程)",
+        "day-4-2026-06-06.md (头部 + 末尾)",
+        "day-5-2026-06-07.md (头部 + 末尾)",
+        "day-6-2026-06-08.md (头部 + 末尾)",
+        "day-7-2026-06-09.md (头部『今晨 10:00 退房』)"
+      ],
+      "create_place_profile": false,
+      "_validates": "§11.2, §11.3, §11.6"
+    }
+  ],
+  "luggage_strategies": {
+    "day1_kawasaki_to_yokohama": {
+      "date": "2026-06-03",
+      "from_lodging": "Hotel Plus Hostel TOKYO KAWASAKI",
+      "to_lodging": "GuestHouse FUTARENO",
+      "context": "11:00 退川崎 → 16:00 入横滨 FUTARENO；中间需在横滨港未来 / 山下 / 伊势佐木线打卡 8 个地点，行李必须先有去处",
+      "options": [
+        {
+          "id": "A",
+          "label": "方案 A — 川崎酒店前台寄存到傍晚",
+          "method": "酒店寄存（川崎前台留行李）",
+          "operation_tips": "10:30 退房并请前台保留行李至 16:00 后；轻装乘 JR 京滨东北线一站到横滨开始动线；当晚回川崎取行李后再去横滨入住",
+          "cost_jpy": 0,
+          "constraints": [
+            "需前台明确接受当日寄存到傍晚（部分廉价 hostel 不接受）",
+            "回川崎取行李 → 横滨为反向移动，违反单调向东推进（§2.3），不推荐"
+          ],
+          "recommended": false
+        },
+        {
+          "id": "B",
+          "label": "方案 B — 横滨站投币柜（推荐）",
+          "method": "车站投币柜 / Coin Locker",
+          "operation_tips": "10:00 退川崎 → 拉行李到横滨站投币柜寄存 → 全天港未来 / 山下 / 伊势佐木动线 → 16:00 前回横滨站取行李 → 横滨地铁 / 步行去 GuestHouse FUTARENO 入住 → 卸下行李后再夜游红砖仓库 / 伊势佐木",
+          "cost_jpy": "中型 ¥600 / 大型 ¥800（24 小时计）",
+          "constraints": [
+            "横滨站投币柜在早高峰 / 周末易满；建议 10:30 前抵达",
+            "大型柜数量有限，行李 > 28 寸建议改方案 C",
+            "横滨站不在 TST 覆盖（横滨日本就不在 TST 期内）"
+          ],
+          "recommended": true
+        },
+        {
+          "id": "C",
+          "label": "方案 C — 黑猫宅配（クロネコヤマト）",
+          "method": "黑猫 / Yamato 当日翌日宅配",
+          "operation_tips": "请川崎酒店前台代寄黑猫宅配单，11:00 前提交即当日发出 → 次日 14:00 后到达 GuestHouse FUTARENO；适合行李 > 2 件 / 想完全免负担当日横滨动线的用户",
+          "cost_jpy": "约 ¥2,000 / 件（关东内同段距离）",
+          "constraints": [
+            "黑猫『当日』段需 11:00 前下单且仅限关东内；超时则次日到达",
+            "FUTARENO 需事先确认接受宅配代收（写明入住人姓名 + 6/3 入住）",
+            "若选 C 则当日 16:00 入住时行李可能尚未送达，准备临时换洗"
+          ],
+          "recommended": false
+        }
+      ],
+      "_validates": "§11.4"
+    },
+    "day2_yokohama_to_ryogoku": {
+      "date": "2026-06-04",
+      "from_lodging": "GuestHouse FUTARENO",
+      "to_lodging": "COGO RYOGOKU",
+      "context": "11:00 退 FUTARENO → 16:00 入 COGO RYOGOKU；中间整日在镰仓（北镰仓 → 中心 → 长谷 → 江之电），不可拖大件行李进江之电观光段",
+      "options": [
+        {
+          "id": "A",
+          "label": "方案 A — 大船 / 镰仓站投币柜（推荐）",
+          "method": "车站投币柜 / Coin Locker",
+          "operation_tips": "10:00 退 FUTARENO → 拉行李到大船站（首选）或镰仓站投币柜寄存 → 整日北镰仓 / 中心 / 长谷 / 江之电沿线 → 16:00 后回大船 / 镰仓站取行李 → JR 横须贺线（→东京）/ JR 总武线快速直接到两国（约 1 小时）→ 步行至 COGO RYOGOKU 入住",
+          "cost_jpy": "中型 ¥600 / 大型 ¥800",
+          "constraints": [
+            "镰仓站投币柜紧张（特别是周末），优先选大船站投币柜更稳",
+            "大船 → 横须贺线 → 东京 → 总武线 / 总武快速 → 两国，跨城段不在 TST",
+            "若行李在镰仓站寄存，回程需先回镰仓再绕大船，多一段 4 分钟"
+          ],
+          "recommended": true
+        },
+        {
+          "id": "B",
+          "label": "方案 B — 黑猫宅配 FUTARENO → COGO RYOGOKU",
+          "method": "黑猫 / Yamato 翌日宅配",
+          "operation_tips": "在 GuestHouse FUTARENO 前台 11:00 前下单黑猫宅配 → 次日（6/5）14:00 后送达 COGO RYOGOKU；当日完全轻装游镰仓",
+          "cost_jpy": "约 ¥2,000 / 件",
+          "constraints": [
+            "宅配次日才到，6/4 当晚入住 COGO 时行李不在身边，需带一晚换洗",
+            "COGO RYOGOKU 须事先确认接受宅配代收（注明 6/5 收件 + 入住人姓名）",
+            "若行李 ≥ 2 件时方案 B 比方案 A 更轻松，但单价合计可能更高"
+          ],
+          "recommended": false
+        },
+        {
+          "id": "C",
+          "label": "方案 C — 全程拖行（不寄存）",
+          "method": "随身携带",
+          "operation_tips": "10:00 退 FUTARENO → 直接拖行李到镰仓 → 圆觉寺 / 鹤冈八幡宫沿线人流密集，拖行不便；仅行李 ≤ 1 件且全为软包时勉强可行",
+          "cost_jpy": 0,
+          "constraints": [
+            "江之电车厢窄，七里滨 / 镰仓高校前段周末挤；拖大件行李会被白眼",
+            "明月院 / 高德院的石阶台地不便携带轮箱",
+            "强烈不推荐"
+          ],
+          "recommended": false
+        }
+      ],
+      "_validates": "§4.6, §11.4"
+    },
+    "day7_ryogoku_to_airport": {
+      "date": "2026-06-09",
+      "from_lodging": "COGO RYOGOKU",
+      "to_lodging": "（离日）",
+      "context": "10:00 退 COGO RYOGOKU；当日浅草 + 晴空塔 5 地点轻量收尾，傍晚去机场（具体航班待用户提供）",
+      "options": [
+        {
+          "id": "A",
+          "label": "方案 A — COGO RYOGOKU 前台寄存（推荐）",
+          "method": "酒店寄存",
+          "operation_tips": "10:00 退房后行李寄存于 COGO RYOGOKU 前台；轻装去浅草 → 晴空塔；傍晚回两国取行李 → 押上 / 锦糸町 / 上野上京成 Skyliner 去 NRT；或两国 → 都营浅草线直通京急去 HND",
+          "cost_jpy": "通常免费 1 件 / 多件可能收费（待用户实地确认）",
+          "constraints": [
+            "退房后还能寄存到当日傍晚，需前台明确同意；超过当日 22:00 一般不接受",
+            "傍晚需绕回两国一趟取行李，再从两国 / 押上去机场（两国—押上同 major_area，路线相容）"
+          ],
+          "recommended": true
+        },
+        {
+          "id": "B",
+          "label": "方案 B — 浅草投币柜",
+          "method": "车站投币柜 / Coin Locker",
+          "operation_tips": "10:00 退房后行李直接拖至浅草雷门 / 浅草站附近投币柜寄存 → 浅草 + 晴空塔打卡后从押上京成押上线上京成本线去 NRT；或从浅草都营浅草线一线直达押上换京成 / 京急直通去 HND",
+          "cost_jpy": "中型 ¥600 / 大型 ¥800",
+          "constraints": [
+            "浅草投币柜在周末 / 节假日早上 10 点多就饱和，建议 10:30 前到",
+            "浅草站大型柜尤其稀缺，行李 > 28 寸建议方案 A",
+            "退房后立刻拖行李进浅草，省一段绕回两国的时间"
+          ],
+          "recommended": false
+        },
+        {
+          "id": "C",
+          "label": "方案 C — 拖行（不寄存）",
+          "method": "随身携带",
+          "operation_tips": "10:00 退房 → 全程拖行李游浅草 + 晴空塔 → 直接去机场",
+          "cost_jpy": 0,
+          "constraints": [
+            "雷门 / 仲见世通人流密集，拖行不便",
+            "晴空塔需通过电梯换乘检票口，安检 + 行李托管不便",
+            "仅行李 ≤ 1 件且很紧时间时考虑；不推荐"
+          ],
+          "recommended": false
+        }
+      ],
+      "_validates": "§11.3, §11.4, §11.5"
+    }
+  },
+  "day7_airport_routes": {
+    "from_origin_options": [
+      "两国（COGO RYOGOKU 取行李后）",
+      "押上（晴空塔后）",
+      "浅草（浅草投币柜取行李后）",
+      "上野（京成 Skyliner 上车点之一）"
+    ],
+    "to_NRT": {
+      "airport_cn": "成田国际机场",
+      "airport_jp": "成田国際空港",
+      "iata": "NRT",
+      "routes": [
+        {
+          "id": "NRT-1",
+          "name": "京成 Skyliner",
+          "line_jp": "京成スカイライナー",
+          "boarding_options": ["押上", "上野", "日暮里"],
+          "duration_minutes_range": "36–41",
+          "fare_jpy": 2580,
+          "tst_covered": false,
+          "notes": "押上 / 上野上车，41 分钟到 NRT；建议提前网购 e-ticket 立减约 ¥300。两国出发先到押上（都营浅草线 1 站）再换 Skyliner 是最短。"
+        },
+        {
+          "id": "NRT-2",
+          "name": "JR N'EX（成田特急）",
+          "line_jp": "JR 成田エクスプレス",
+          "boarding_options": ["东京", "锦糸町"],
+          "duration_minutes_range": "55–65",
+          "fare_jpy": 3070,
+          "tst_covered": false,
+          "notes": "锦糸町（JR 总武线快速从两国 1 站）/ 东京站上车；外国游客可买 N'EX 往返套票优惠。"
+        }
+      ]
+    },
+    "to_HND": {
+      "airport_cn": "羽田机场",
+      "airport_jp": "羽田空港",
+      "iata": "HND",
+      "routes": [
+        {
+          "id": "HND-1",
+          "name": "都营浅草线 → 京急本线（直通运行）",
+          "line_jp": "都営浅草線 → 京急本線（直通）",
+          "boarding_options": ["两国", "浅草", "押上"],
+          "duration_minutes_range": "50–60",
+          "fare_jpy_range": "600–800",
+          "tst_covered": false,
+          "notes": "都营浅草线与京急本线直通，从两国 / 浅草 / 押上不换乘到 HND；性价比最高。注意须确认乘的是『エアポート快特』或『快特』直通班次（部分区间车止于泉岳寺）。"
+        },
+        {
+          "id": "HND-2",
+          "name": "机场利木津巴士",
+          "line_jp": "リムジンバス（東京シティエアターミナル経由便など）",
+          "boarding_options": ["两国（锦糸町站附近 T-CAT 接驳）", "锦糸町"],
+          "duration_minutes_range": "70–85",
+          "fare_jpy": 1300,
+          "tst_covered": false,
+          "notes": "适合行李多 / 不想换乘的用户；准点性受首都高速路况影响，建议预留 30 分钟缓冲。"
+        }
+      ]
+    },
+    "decision_hint": "若航班 13:00–17:00 起飞 → 当日仅打卡浅草 1 处即去机场（方案 X）；若航班 ≥ 19:00 → 完整 5 个地点 + 晴空塔后去机场（方案 Y）。最终选择待用户提供航班信息后确定。",
+    "_validates": "§11.5"
+  },
+  "evening_return_to_cogo": {
+    "$comment": "Day 3–7 文档尾『当晚回程』段的占位结构。每日填写时把 last_place / route_legs / total_minutes_estimate 替换为该日实际数据。Day 7 不适用此结构，改用 day7_airport_routes。",
+    "applies_to_days": [3, 4, 5, 6],
+    "template": {
+      "day_n": null,
+      "date": null,
+      "last_place": {
+        "name_cn": "{当日末个 Place_Profile 中文名}",
+        "name_jp": "{日文 / Romaji}",
+        "nearest_station": "{该地点最近车站}"
+      },
+      "route_legs": [
+        {
+          "from": "{当日末个地点最近车站}",
+          "to": "两国站",
+          "line": "{推荐线路：例如 都营大江户线 / 东京 Metro 东西线 / 都营浅草线 / 日比谷线 + 浅草线 等}",
+          "transfers": "{0–2 次换乘}",
+          "duration_minutes": "{X}",
+          "fare_jpy": "{Y 或 0（TST 覆盖）}",
+          "tst_covered": "{true / false}"
+        },
+        {
+          "from": "两国站",
+          "to": "COGO RYOGOKU",
+          "line": "步行",
+          "transfers": 0,
+          "duration_minutes": "约 5–8（待用户实地确认具体出口）",
+          "fare_jpy": 0,
+          "tst_covered": "n/a"
+        }
+      ],
+      "total_minutes_estimate": "{X + 5–8}"
+    },
+    "per_day_seed": {
+      "day3": {
+        "day_n": 3,
+        "date": "2026-06-05",
+        "last_place_hint": "Tokyo Dome（水道桥 / 后乐园站）",
+        "route_hint": "水道桥 / 后乐园 → 都营大江户线 → 两国（约 12–15 分钟，TST ✅）→ 步行 5–8 分钟",
+        "total_minutes_estimate": "20–25"
+      },
+      "day4": {
+        "day_n": 4,
+        "date": "2026-06-06",
+        "last_place_hint": "Shinjuku Golden-Gai（新宿三丁目 / 新宿）",
+        "route_hint": "新宿 → 都营大江户线（一线直达）→ 两国（约 25 分钟，TST ✅）→ 步行 5–8 分钟",
+        "total_minutes_estimate": "30–35"
+      },
+      "day5": {
+        "day_n": 5,
+        "date": "2026-06-07",
+        "last_place_hint": "Waseda University（早稻田站）",
+        "route_hint": "早稻田 → 东京 Metro 东西线（一线直达）→ 两国（绕一段需在『饭田桥』中转或东西线直接到日本桥换都营浅草线）；最优实操：早稻田 → 东西线 → 茅场町换日比谷线？— 实际推荐：早稻田 → 东西线 → 日本桥 → 步行换都营浅草线 / 都营新宿线 → 两国（约 25–30 分钟，TST ✅）→ 步行 5–8 分钟",
+        "total_minutes_estimate": "30–40"
+      },
+      "day6": {
+        "day_n": 6,
+        "date": "2026-06-08",
+        "last_place_hint": "Kabukiza Theatre（东银座站）",
+        "route_hint": "东银座 → 东京 Metro 日比谷线 → 人形町 / 茅场町换都营浅草线 → 两国（约 20 分钟，TST ✅，恰逢 TST 当日同时刻失效，需确认散场后是否仍在窗口内）→ 步行 5–8 分钟",
+        "total_minutes_estimate": "25–30"
+      }
+    },
+    "_validates": "§11.6"
+  },
+  "cross_references": {
+    "design_doc_section": "design.md > 行李 / 退房衔接设计",
+    "tst_data_source": "由 task 1.3 的 TST 段落数据表提供 ✅ / ❌ 标记，本文件仅在 evening_return_to_cogo 中引用",
+    "downstream_consumers": [
+      "task 2.1 (Day 1 文档头『行李』『硬约束』『当晚住宿』字段)",
+      "task 3.1 (Day 2 文档头『行李』『硬约束』字段)",
+      "task 3.6 (Day 2 文档尾 行李宅配方案提示 + 抵达 COGO 步行段)",
+      "task 4.5 (Day 3 文档尾 当晚回程)",
+      "task 5.6 (Day 4 文档尾 当晚回程)",
+      "task 6.5 (Day 5 文档尾 当晚回程)",
+      "task 7.5 (Day 6 文档尾 当晚回程 + 次日提醒退房 / 机场)",
+      "task 8.1 (Day 7 文档头『行李』三方案 + 硬约束 10:00 退房)",
+      "task 8.4 (Day 7 文档尾 NRT / HND 两套机场前往参考路线)"
+    ]
+  }
+}

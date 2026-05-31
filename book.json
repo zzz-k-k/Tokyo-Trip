@@ -1,0 +1,14 @@
+{
+  "title": "锅巴的奇妙冒险之迷失东京",
+  "description": "锅巴的奇妙冒险之迷失东京 — 2026 年 6 月关东 7 日（横滨 / 镰仓 / 东京）",
+  "author": "v6582374-netizen",
+  "language": "zh-hans",
+  "plugins": ["-highlight", "-sharing", "-fontsettings", "trip-title"],
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "styles": {
+    "website": "styles/website.css"
+  }
+}

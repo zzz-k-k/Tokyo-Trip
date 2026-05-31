@@ -1,0 +1,706 @@
+{
+  "_description": "Tokyo Subway Ticket (TST) per-segment coverage table for the 7-day Kanto itinerary. Source of truth for Day 3–6 文档尾交通费表渲染. 由 design.md「Tokyo Subway Ticket 使用策略」表 + requirements §10 整理而来。",
+  "_validates": "Requirements §10.1, §10.2, §10.3, §10.4, §10.6",
+  "ticket": {
+    "type": "Tokyo Subway Ticket 72-hour",
+    "price_jpy": 1500,
+    "coverage": "Tokyo Metro 全 9 线 + 都营地下铁全 4 线（合计 13 条）",
+    "not_covered": [
+      "JR (山手 / 中央 / 总武 / 横须贺 / 横滨 / 南武 / 京滨东北 等)",
+      "私铁 (小田急 / 东急 / 京急 / 京成 / 东武 / 港未来线 / 江之电)",
+      "新干线"
+    ],
+    "activation": {
+      "date": "2026-06-05",
+      "moment": "6/5 上午（首次过闸刷卡时刻）",
+      "rule": "购买不等于激活，首次过闸刷卡才记激活时刻",
+      "recommended_first_ride": "两国 → 上野（都营大江户线，刷进站即激活）",
+      "validates": "§10.1, §10.6"
+    },
+    "expiry": {
+      "date": "2026-06-08",
+      "moment": "6/8 与 6/5 上午激活同时刻（激活后连续 72 小时）",
+      "validates": "§10.1"
+    },
+    "fare_estimate_note": "fare_jpy 为按 2025 年 IC 卡 / 普通车票常规票价的估算（design.md 显式标注的票价照搬，其余按典型站间距估算）；最终以乘车当日窗口票价为准。"
+  },
+  "legend": {
+    "tst_covered_values": ["✅", "❌", "部分"],
+    "tst_covered_meaning": {
+      "✅": "整段在 Tokyo Metro / Toei 网络内，TST 完全覆盖（费用计为 0）",
+      "❌": "整段全部在 JR / 私铁，TST 不覆盖，需自费",
+      "部分": "段内既有 Metro / Toei 段也有 JR / 私铁段，TST 仅覆盖前者；fare_jpy 仅计未覆盖部分"
+    }
+  },
+  "segments": [
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 1,
+      "from": "川崎（Hotel Plus Hostel TOKYO KAWASAKI）",
+      "to": "新横滨",
+      "line": "JR 南武线 → JR 横滨线",
+      "fare_jpy": 230,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "❌",
+        "minatomirai_line": "❌",
+        "bus_1day": "❌"
+      },
+      "note": "横滨日不在 TST 窗口期；任何横滨市内券都不含此 JR 段（必费 ¥230）"
+    },
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 2,
+      "from": "新横滨",
+      "to": "桜木町 / 横滨站",
+      "line": "横浜市営地下鉄ブルーライン",
+      "fare_jpy": 230,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "✅",
+        "minatomirai_line": "❌",
+        "bus_1day": "❌"
+      },
+      "note": "MINATO 广域版含新横滨段；已购广域券则此段 0 元"
+    },
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 3,
+      "from": "桜木町 / 横滨站",
+      "to": "馬車道（OMO5 + 红砖 + Hammerhead 区）",
+      "line": "港未来线 / 步行",
+      "fare_jpy": 190,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "❌",
+        "minatomirai_line": "✅",
+        "bus_1day": "❌",
+        "akaikutsu_baysideblue": "✅（红鞋子 / BAYSIDE BLUE 替代港未来线，30 分钟一班）"
+      },
+      "note": "MINATO 广域不直接含港未来线；可改用红鞋子 / BAYSIDE BLUE 观光巴士覆盖（在 MINATO 券范围内）"
+    },
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 4,
+      "from": "馬車道",
+      "to": "元町・中華街（中华街 + 山下公园）",
+      "line": "港未来线（馬車道 → 元町・中華街）/ 红鞋子 / BAYSIDE BLUE",
+      "fare_jpy": 190,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "❌",
+        "minatomirai_line": "✅",
+        "bus_1day": "❌",
+        "akaikutsu_baysideblue": "✅"
+      },
+      "note": "山下公园 / 中华街段；推荐红鞋子（MINATO 广域含）替代港未来线"
+    },
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 5,
+      "from": "元町・中華街 / 山下公园",
+      "to": "三溪园（本牧三之谷）往返",
+      "line": "横滨市营巴士 8 / 58 / 99 / 101 路（往返）",
+      "fare_jpy": 460,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "✅",
+        "minatomirai_line": "❌",
+        "bus_1day": "✅",
+        "kyukyu_yokohama": "✅"
+      },
+      "note": "三溪园在本牧、需走巴士；MINATO 基础 / 广域 / 市营巴士 1 日券 / 京急横滨 1 日券 均含此段（最大化省 ¥460）"
+    },
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 6,
+      "from": "山下 / 关内",
+      "to": "伊势佐木 / 关内夜游",
+      "line": "步行 / 横滨地铁短段",
+      "fare_jpy": 150,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "✅（地铁段）",
+        "minatomirai_line": "❌",
+        "bus_1day": "❌"
+      },
+      "note": "夜游伊势佐木商店街"
+    },
+    {
+      "day": 1,
+      "date": "2026-06-03",
+      "seq": 7,
+      "from": "关内 / 伊势佐木",
+      "to": "GuestHouse FUTARENO（横滨）",
+      "line": "JR 京滨东北线 / 横滨地铁 + 步行",
+      "fare_jpy": 200,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "minato_wide": "✅（地铁段）",
+        "minatomirai_line": "❌",
+        "bus_1day": "❌"
+      },
+      "note": "当晚回程；MINATO 广域含横滨地铁段"
+    },
+
+    {
+      "day": 2,
+      "date": "2026-06-04",
+      "seq": 1,
+      "from": "横滨（GuestHouse FUTARENO）",
+      "to": "北镰仓",
+      "line": "JR 横须贺线",
+      "fare_jpy": 420,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "noriorikun": "❌"
+      },
+      "note": "镰仓日不在 TST 窗口期；JR 段无任何镰仓向券能覆盖（必费 ¥420）"
+    },
+    {
+      "day": 2,
+      "date": "2026-06-04",
+      "seq": 2,
+      "from": "北镰仓 / 圆觉寺 / 明月院 / 建长寺",
+      "to": "鎌倉駅（西口寄存 + 小町通午饭）",
+      "line": "徒步（北镰仓 → 巨福呂坂 → 鶴岡八幡宮 → 鎌倉駅，约 2 公里）",
+      "fare_jpy": 0,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "noriorikun": "n/a（步行）"
+      },
+      "note": "新增建长寺后徒步轴：圆觉寺 → 明月院 → 建长寺 → 鶴岡八幡宮 → 鎌倉駅 全程徒步，无车票"
+    },
+    {
+      "day": 2,
+      "date": "2026-06-04",
+      "seq": 3,
+      "from": "鎌倉",
+      "to": "长谷（高德院镰仓大佛）",
+      "line": "江ノ電",
+      "fare_jpy": 200,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "noriorikun": "✅"
+      },
+      "note": "江ノ電のりおりくん ¥800 1 日券覆盖；高德院凭券减 ¥50 入山料"
+    },
+    {
+      "day": 2,
+      "date": "2026-06-04",
+      "seq": 4,
+      "from": "长谷",
+      "to": "镰仓高校前 / 七里滨",
+      "line": "江ノ電",
+      "fare_jpy": 260,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "noriorikun": "✅"
+      },
+      "note": "江ノ電沿线西行；のりおりくん覆盖"
+    },
+    {
+      "day": 2,
+      "date": "2026-06-04",
+      "seq": 5,
+      "from": "七里滨 / 高校前",
+      "to": "鎌倉(取行李)",
+      "line": "江ノ電",
+      "fare_jpy": 350,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "noriorikun": "✅"
+      },
+      "note": "回程取行李（鎌倉駅西口观协官方寄存 17:00 关门硬节点）；江ノ電 4 段累计散付 ¥810 vs のりおりくん ¥800 仅省 ¥10，但加沿线设施折扣 ≥ ¥100 等价值"
+    },
+    {
+      "day": 2,
+      "date": "2026-06-04",
+      "seq": 6,
+      "from": "鎌倉 / 大船",
+      "to": "两国（COGO RYOGOKU）",
+      "line": "JR 横须贺线 → JR 总武线快速",
+      "fare_jpy": 970,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "local_pass_coverage": {
+        "noriorikun": "❌"
+      },
+      "note": "16:00 后入住 COGO RYOGOKU；JR 跨城段无券能覆盖（必费 ¥970）"
+    },
+
+    {
+      "day": 3,
+      "date": "2026-06-05",
+      "seq": 1,
+      "from": "两国（COGO RYOGOKU）",
+      "to": "上野御徒町 / 上野",
+      "line": "都营大江户线",
+      "fare_jpy": 220,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "TST 激活点：刷卡进站即激活"
+    },
+    {
+      "day": 3,
+      "date": "2026-06-05",
+      "seq": 2,
+      "from": "上野",
+      "to": "秋叶原",
+      "line": "JR 山手线（一站）",
+      "fare_jpy": 150,
+      "tst_covered": "❌",
+      "in_tst_window": true,
+      "note": "短距 JR；亦可步行 15 分钟（design.md 已标注）"
+    },
+    {
+      "day": 3,
+      "date": "2026-06-05",
+      "seq": 3,
+      "from": "秋叶原",
+      "to": "水道桥",
+      "line": "JR 总武线 → JR 中央线（御茶水换乘）",
+      "fare_jpy": 150,
+      "tst_covered": "❌",
+      "in_tst_window": true,
+      "note": "默认 JR 路线"
+    },
+    {
+      "day": 3,
+      "date": "2026-06-05",
+      "seq": "3-alt",
+      "from": "秋叶原",
+      "to": "水道桥（神保町 / 三田线版本）",
+      "line": "都营新宿线（岩本町）+ 都营三田线（神保町 → 水道桥）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "design.md 显式标注的 TST 替代路线，建议优先采用以提高 TST 利用率"
+    },
+    {
+      "day": 3,
+      "date": "2026-06-05",
+      "seq": 4,
+      "from": "水道桥 / 后乐园",
+      "to": "两国（COGO RYOGOKU）",
+      "line": "都营大江户线",
+      "fare_jpy": 220,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "棒球散场后回程"
+    },
+
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 1,
+      "from": "两国（COGO RYOGOKU）",
+      "to": "祖师谷大藏（M2ビル）",
+      "line": "都营大江户线（两国 → 新宿）+ 小田急小田原线（新宿 → 祖师谷大藏）",
+      "fare_jpy": 240,
+      "tst_covered": "部分",
+      "in_tst_window": true,
+      "note": "大江户线段 ✅；小田急段 ❌（fare_jpy 仅计小田急段）"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 2,
+      "from": "祖师谷大藏",
+      "to": "神保町（矢口书店）",
+      "line": "小田急（祖师谷大藏 → 下北泽 / 代代木上原）+ 东京 Metro 半蔵门线（→ 神保町）",
+      "fare_jpy": 270,
+      "tst_covered": "部分",
+      "in_tst_window": true,
+      "note": "半蔵门线段 ✅；小田急段 ❌（fare_jpy 仅计小田急段）"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 3,
+      "from": "神保町",
+      "to": "小伝馬町",
+      "line": "都营浅草线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "小宫商店购伞往路；都营浅草线 1 站约 2 分钟（TST ✅）"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 4,
+      "from": "小伝馬町",
+      "to": "神保町",
+      "line": "都营浅草线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "小宫商店购伞返路；都营浅草线 1 站约 2 分钟（TST ✅）"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 5,
+      "from": "神保町",
+      "to": "新宿",
+      "line": "都营新宿线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "都营新宿线一线直达"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 6,
+      "from": "新宿",
+      "to": "中野（Mandarake Nakano）",
+      "line": "东京 Metro 丸之内线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "丸之内线终点中野坂上后到中野（注：实际中野 Mandarake 由 JR 中野站较近，丸之内线终点是中野坂上 / 方南町分支；如改 JR 山手→中央线则 TST ❌）"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 7,
+      "from": "中野",
+      "to": "新宿（Golden-Gai 夜游）",
+      "line": "东京 Metro 丸之内线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "夜游回头段"
+    },
+    {
+      "day": 4,
+      "date": "2026-06-06",
+      "seq": 8,
+      "from": "新宿",
+      "to": "两国（COGO RYOGOKU）",
+      "line": "都营大江户线（一线直达）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "当晚回程"
+    },
+
+    {
+      "day": 5,
+      "date": "2026-06-07",
+      "seq": 1,
+      "from": "两国（COGO RYOGOKU）",
+      "to": "赤坂（日枝神社）",
+      "line": "都营大江户线 + 东京 Metro 千代田线（赤坂 / 国会议事堂前）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "山王祭 09:00 神事前到达"
+    },
+    {
+      "day": 5,
+      "date": "2026-06-07",
+      "seq": 2,
+      "from": "赤坂",
+      "to": "六本木",
+      "line": "东京 Metro 南北线 / 都营大江户线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "南北线一站或大江户线"
+    },
+    {
+      "day": 5,
+      "date": "2026-06-07",
+      "seq": 3,
+      "from": "六本木",
+      "to": "表参道(根津美术馆)",
+      "line": "东京 Metro 千代田线 / 银座线",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "南青山 / 隈研吾建筑段"
+    },
+    {
+      "day": 5,
+      "date": "2026-06-07",
+      "seq": 4,
+      "from": "表参道",
+      "to": "神乐坂",
+      "line": "东京 Metro 银座线 + 东西线（饭田桥换乘）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "经赤坂见附 / 饭田桥换乘"
+    },
+    {
+      "day": 5,
+      "date": "2026-06-07",
+      "seq": 5,
+      "from": "神乐坂",
+      "to": "早稻田",
+      "line": "东京 Metro 东西线（一站）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "村上春树图书馆 / 隈研吾"
+    },
+    {
+      "day": 5,
+      "date": "2026-06-07",
+      "seq": 6,
+      "from": "早稻田",
+      "to": "两国（COGO RYOGOKU）",
+      "line": "东京 Metro 东西线（一线直达至门前仲町 / 步行 / 转都营大江户线）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "当晚回程"
+    },
+
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 1,
+      "from": "两国（COGO RYOGOKU）",
+      "to": "涩谷",
+      "line": "都营大江户线 + 东京 Metro 半蔵门线（清澄白河 / 神保町换乘）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "TST 当日仍有效（直至 6/8 上午激活同时刻）"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 2,
+      "from": "涩谷",
+      "to": "原宿 / 表参道（明治神宫）",
+      "line": "东京 Metro 千代田线（表参道 → 明治神宫前）/ 备选 JR 山手线",
+      "fare_jpy": 0,
+      "tst_covered": "部分",
+      "in_tst_window": true,
+      "note": "走千代田线 ✅；走 JR 山手线 ❌（design.md 标注）"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 3,
+      "from": "原宿 / 表参道",
+      "to": "代官山（Tsutaya Books Daikanyama）",
+      "line": "JR 山手线（原宿 → 涩谷）+ 东急东横线（涩谷 → 代官山）",
+      "fare_jpy": 350,
+      "tst_covered": "❌",
+      "in_tst_window": true,
+      "note": "山手线非 Metro，东急东横线非 Metro，全段不在 TST"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 4,
+      "from": "代官山",
+      "to": "银座（途经涩谷换乘穿过）",
+      "line": "东急东横线（代官山 → 涩谷）+ 东京 Metro 银座线（涩谷 → 银座）",
+      "fare_jpy": 190,
+      "tst_covered": "部分",
+      "in_tst_window": true,
+      "note": "design.md 必要回头段：东急东横线 ¥190 + 银座线 TST ✅；回头不可避免（无不经涩谷的直达线）"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 5,
+      "from": "银座",
+      "to": "丸之内 / 东京站",
+      "line": "东京 Metro 丸之内线（一站）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "亦可步行 10 分钟"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 6,
+      "from": "东京站",
+      "to": "日本桥",
+      "line": "步行 8 分钟 / 东京 Metro 银座线一站",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "推荐步行（高岛屋 / Namiki Yabusoba）"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 7,
+      "from": "日本桥",
+      "to": "银座（歌舞伎座 / 东银座）",
+      "line": "东京 Metro 日比谷线（一站）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "歌舞伎座 4 楼单幕席 17:00 / 18:00 入场"
+    },
+    {
+      "day": 6,
+      "date": "2026-06-08",
+      "seq": 8,
+      "from": "歌舞伎座 / 东银座",
+      "to": "两国（COGO RYOGOKU）",
+      "line": "东京 Metro 日比谷线 + 都营浅草线（人形町 / 东日本桥换乘）",
+      "fare_jpy": 0,
+      "tst_covered": "✅",
+      "in_tst_window": true,
+      "note": "当晚回程；TST 散场后仍在窗口内"
+    },
+
+    {
+      "day": 7,
+      "date": "2026-06-09",
+      "seq": 1,
+      "from": "两国（COGO RYOGOKU）",
+      "to": "浅草（雷门）",
+      "line": "都营浅草线（一站）",
+      "fare_jpy": 180,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "note": "TST 已于 6/8 上午同时刻失效"
+    },
+    {
+      "day": 7,
+      "date": "2026-06-09",
+      "seq": 2,
+      "from": "浅草",
+      "to": "押上（晴空塔）",
+      "line": "都营浅草线 / 东武晴空塔线",
+      "fare_jpy": 180,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "note": "TST 失效"
+    },
+    {
+      "day": 7,
+      "date": "2026-06-09",
+      "seq": "3-NRT",
+      "from": "押上 / 上野",
+      "to": "成田机场（NRT）",
+      "line": "京成 Skyliner（上野 / 押上 → NRT）",
+      "fare_jpy": 2580,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "note": "京成不在 TST；备选 JR N'EX 东京站发车 ¥3,070"
+    },
+    {
+      "day": 7,
+      "date": "2026-06-09",
+      "seq": "3-HND",
+      "from": "两国 / 浅草",
+      "to": "羽田机场（HND）",
+      "line": "都营浅草线 → 京急本线（直通运行）",
+      "fare_jpy": 700,
+      "tst_covered": "❌",
+      "in_tst_window": false,
+      "note": "京急段不在 TST；备选利木津巴士 ¥1,300（约 80 分钟）"
+    }
+  ],
+  "tst_coverage_summary": {
+    "rule": "design.md §10.4：TST 有效期内 Tokyo Metro / Toei 累计乘车次数 ≥ 12（requirements §10.4）",
+    "counting_convention": "按 design.md 计数口径：以「一次刷卡入闸 → 出闸」为 1 次乘车（途中跨线换乘仍记 1 次）；段表中 ✅ + 部分 标记仅在涉及 Metro / Toei 网络时才计入，纯 JR / 私铁段不计。",
+    "in_window_days": ["2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"],
+    "covered_segments_per_day": {
+      "day_3_2026-06-05": {
+        "covered_count": 3,
+        "covered_rides": [
+          "两国 → 上野（都营大江户线）",
+          "秋叶原 → 神保町 → 水道桥（都营新宿线 + 都营三田线，三田线替代路线）",
+          "水道桥 → 两国（都营大江户线）"
+        ],
+        "note": "若放弃三田线替代路线、改走 JR 中央线，则 Day 3 covered_count = 2；本表按 design.md 推荐路线计 3"
+      },
+      "day_4_2026-06-06": {
+        "covered_count": 7,
+        "covered_rides": [
+          "半蔵门线段（祖师谷大藏 → 神保町 段中的 Metro 部分）",
+          "都营浅草线（神保町 → 小伝馬町，小宫商店购伞往路）",
+          "都营浅草线（小伝馬町 → 神保町，小宫商店购伞返路）",
+          "都营新宿线（神保町 → 新宿）",
+          "东京 Metro 丸之内线（新宿 → 中野）",
+          "东京 Metro 丸之内线（中野 → 新宿，夜游回头）",
+          "都营大江户线（新宿 → 两国，回程）"
+        ],
+        "note": "Day 4 seq 1 的「两国 → 新宿段」大江户线部分与 seq 8 的回程构成同一日往返 / 续乘节奏，design.md 把入新宿前的 Metro 段并入半蔵门线段不重复计数；本次精修新增神保町 ↔ 小伝馬町往返 2 段（TST ✅）"
+      },
+      "day_5_2026-06-07": {
+        "covered_count": 6,
+        "covered_rides": [
+          "两国 → 赤坂（大江户线 + 千代田线）",
+          "赤坂 → 六本木（南北线 / 大江户线）",
+          "六本木 → 表参道（千代田线 / 银座线）",
+          "表参道 → 神乐坂（银座线 + 东西线）",
+          "神乐坂 → 早稻田（东西线）",
+          "早稻田 → 两国（东西线）"
+        ]
+      },
+      "day_6_2026-06-08": {
+        "covered_count": 5,
+        "covered_rides": [
+          "两国 → 涩谷（大江户线 + 半蔵门线）",
+          "涩谷 → 原宿 / 表参道（千代田线段，前提走 Metro 路线）",
+          "代官山 → 涩谷换乘 → 银座（银座线段，必要回头段）",
+          "银座 → 东京站 → 日本桥 → 银座 / 歌舞伎座（丸之内 + 日比谷线段，日内多站连刷）",
+          "歌舞伎座 → 两国（日比谷线 + 都营浅草线，回程）"
+        ],
+        "note": "TST 当日仍有效，全日 Metro / Toei 高密度使用；丸之内线 + 日比谷线串接的 3 个站点段被 design.md 合并计为 1 次乘车"
+      }
+    },
+    "cumulative_covered_rides": 21,
+    "cumulative_covered_rides_min_threshold": 12,
+    "threshold_passed": true,
+    "_threshold_margin": "21 - 12 = 9（≥ 12 阈值通过，留 9 段冗余）",
+    "validates": "§10.3, §10.4"
+  },
+  "non_tst_days": {
+    "out_of_window_days": ["2026-06-03", "2026-06-04", "2026-06-09"],
+    "rationale": "requirements §10.5：横滨日（6/3）与镰仓日（6/4）以 JR / 私铁为主，不纳入 TST 有效期；6/9 在 6/8 上午激活同时刻后已失效。",
+    "validates": "§10.5"
+  },
+  "local_passes_summary": {
+    "_description": "Day 1（横滨）/ Day 2（镰仓）本地交通券推荐与覆盖测算。补 TST 不覆盖窗口外的两个出行日。",
+    "day_1_yokohama": {
+      "recommended": "MINATO 闲逛券广域 ¥750 + 港未来线 2 段散付 ¥380",
+      "total_cost_jpy": 1130,
+      "naive_baseline_jpy": 1580,
+      "savings_jpy": 450,
+      "alternative": "MINATO 广域 ¥750 全用红鞋子 / BAYSIDE BLUE 替代 = ¥980 (省 ¥600 但要等 30 分钟一班的观光巴士)",
+      "purchase_location": "新横滨地铁站服务中心（广域版必须在新横滨买）"
+    },
+    "day_2_kamakura": {
+      "recommended": "江ノ電のりおりくん ¥800",
+      "total_enoden_segments_naive_jpy": 810,
+      "ticket_savings_jpy": 10,
+      "facility_discount_value_jpy_min": 100,
+      "purchase_location": "JR 鎌倉駅东口对面 江ノ電 鎌倉駅 自动售票机 / EMot App 数字版"
+    }
+  }
+}

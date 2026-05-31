@@ -1,0 +1,15 @@
+{
+  "name": "tokyo-trip-gitbook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitBook/HonKit site for the Tokyo Trip travel plan.",
+  "scripts": {
+    "build": "honkit build . _book",
+    "serve": "honkit serve . --port 4000"
+  },
+  "devDependencies": {
+    "@honkit/honkit-plugin-fontsettings": "^6.2.1",
+    "honkit-plugin-trip-title": "file:plugins/trip-title",
+    "honkit": "^6.1.4"
+  }
+}
